@@ -1,6 +1,8 @@
-void setup(){
+#include <stdio.h>
 
+void setup()
+{
 }
-void loop(){
-    
+void loop()
+{
 }
