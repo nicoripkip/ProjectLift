@@ -1,8 +1,6 @@
-#include <stdio.h>
+#ifndef Verdieping
+#define verdieping
 
-void setup()
-{
-}
-void loop()
-{
-}
+
+
+#endif 
