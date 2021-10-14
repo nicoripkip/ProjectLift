@@ -30,7 +30,7 @@ byte counter[10] = {
  **/
 void define_pins_for_display(int clock_pin, int data_pin, int latch_pin)
 {
-    pinMode(clock_pin, OUTPUT); // Zet de
+    pinMode(clock_pin, OUTPUT); 
     pinMode(data_pin, OUTPUT);
     pinMode(latch_pin, OUTPUT);
 }

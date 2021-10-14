@@ -7,8 +7,8 @@
 //=================================================================================================
 #include <Wire.h>
 #include <Arduino.h>
-#include "Verdieping.hpp"
-#include "SegmentDisplay.hpp"
+#include "verdieping.hpp"
+#include "segment.hpp"
 
 
 #define LATCH_PIN 3
@@ -17,6 +17,8 @@
 
 #define BUTTON_UP 6
 #define BUTTON_DOWN 7
+#define LED_UP 8
+#define LED_DOWN 9
 
 #define BAUD_RATE 115200
 
@@ -27,6 +29,7 @@
 void setup()
 {
     define_pins_for_display(CLOCK_PIN, DATA_PIN, LATCH_PIN);
+    define_pins_for_move_buttons(BUTTON_UP, BUTTON_DOWN, LED_UP, LED_DOWN);
 
     Serial.begin(BAUD_RATE);
 }
@@ -37,5 +40,5 @@ void setup()
  **/
 void loop()
 {
-    // shift_number_to_display(CLOCK_PIN, DATA_PIN, LATCH_PIN, counter[4]);
+    shift_number_to_display(CLOCK_PIN, DATA_PIN, LATCH_PIN, counter[7]);
 }

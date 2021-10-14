@@ -22,6 +22,9 @@ int generate_slave_id(int ids[])
 }
 
 
+/**
+ * Functie voor het genereren voor 
+ **/
 void define_pins_for_move_buttons(int button_up, int button_down, int led_up, int led_down)
 {
     pinMode(button_up, INPUT_PULLUP);
