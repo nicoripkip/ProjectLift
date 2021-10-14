@@ -1,3 +1,10 @@
+//=================================================================================================
+// Name: SegmentDisplay.hpp
+// Description: 
+//
+// Author: Nico van Ommen
+// Date: 14-10-2021
+//=================================================================================================
 #ifndef SEGMENT_DISPLAY
 #define SEGMENT_DISPLAY
 
@@ -16,6 +23,17 @@ byte counter[10] = {
     B01111111, // Representeerd getal: 8
     B01111011  // Representeerd getal: 9
 };
+
+
+/**
+ * Functie voor het van te voren defineren van de pinnen
+ **/
+void define_pins_for_display(int clock_pin, int data_pin, int latch_pin)
+{
+    pinMode(clock_pin, OUTPUT); // Zet de
+    pinMode(data_pin, OUTPUT);
+    pinMode(latch_pin, OUTPUT);
+}
 
 
 /**

@@ -1,11 +1,23 @@
+//=================================================================================================
+// Name: main.cpp
+// Description: 
+//
+// Author: Nico van Ommen
+// Date: 01-10-2021
+//=================================================================================================
 #include <Wire.h>
+#include <Arduino.h>
 #include "Verdieping.hpp"
-#include "Display.h"
+#include "SegmentDisplay.hpp"
 
 
 #define LATCH_PIN 3
 #define CLOCK_PIN 2
 #define DATA_PIN 4
+
+#define BUTTON_UP 6
+#define BUTTON_DOWN 7
+
 #define BAUD_RATE 115200
 
 
@@ -14,9 +26,7 @@
  **/
 void setup()
 {
-    pinMode(LATCH_PIN, OUTPUT);
-    pinMode(CLOCK_PIN, OUTPUT);
-    pinMode(DATA_PIN, OUTPUT);
+    define_pins_for_display(CLOCK_PIN, DATA_PIN, LATCH_PIN);
 
     Serial.begin(BAUD_RATE);
 }
@@ -27,5 +37,5 @@ void setup()
  **/
 void loop()
 {
-    
+    // shift_number_to_display(CLOCK_PIN, DATA_PIN, LATCH_PIN, counter[4]);
 }
