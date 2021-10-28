@@ -1,6 +1,6 @@
 //=================================================================================================
 // Name: main.cpp
-// Description: 
+// Description:
 //
 // Author: Nico van Ommen
 // Date: 01-10-2021
@@ -44,39 +44,46 @@ void setup()
  **/
 void loop()
 {
-    shift_number_to_display(CLOCK_PIN, DATA_PIN, LATCH_PIN, counter[7]);
+    shift_number_to_display(CLOCK_PIN, DATA_PIN, LATCH_PIN, counter[3]);
 
     int btn1 = digitalRead(BUTTON_UP);
     int btn2 = digitalRead(BUTTON_DOWN);
 
+    call_button(BUTTON_UP, LED_UP);
 
-    if (btn1 == HIGH && btn2 == LOW) {
-        pressed = 1;
+    // if (btn1 == HIGH && btn2 == LOW)
+    // {
+    //     pressed = 1;
 
-        Serial.print("De knop is: ");
-        Serial.println(pressed);
-        Serial.println("Klikkie");
-    }
+    //     Serial.print("De knop is: ");
+    //     Serial.println(pressed);
+    //     Serial.println("Klikkie");
+    // }
 
-    if (btn2 == HIGH && btn1 == LOW) {
-        pressed = 0;
+    // if (btn2 == HIGH && btn1 == LOW)
+    // {
+    //     pressed = 0;
 
-        Serial.print("De knop is: ");
-        Serial.println(pressed);
+    //     Serial.print("De knop is: ");
+    //     Serial.println(pressed);
 
-        digitalWrite(LED_DOWN, HIGH);
+    //     digitalWrite(LED_DOWN, HIGH);
 
-        if (led_down == 0) {
-            led_down == 1;
-        } 
-    }
+    //     if (led_down == 0)
+    //     {
+    //         led_down == 1;
+    //     }
+    // }
 
-    Serial.print("De knop is: ");
-    Serial.println(pressed);
+    // Serial.print("De knop is: ");
+    // Serial.println(pressed);
 
-    if (led_down == 1) {
-        digitalWrite(LED_DOWN, HIGH);
-    } else {
-        digitalWrite(LED_DOWN, LOW);
-    }
+    // if (led_down == 1)
+    // {
+    //     digitalWrite(LED_DOWN, HIGH);
+    // }
+    // else
+    // {
+    //     digitalWrite(LED_DOWN, LOW);
+    // }
 }

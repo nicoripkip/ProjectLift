@@ -8,6 +8,10 @@
 #ifndef SEGMENT_DISPLAY
 #define SEGMENT_DISPLAY
 
+
+#include <Wire.h>
+
+
 /**
  * Default array met alle standaard nummbers
  **/
@@ -45,6 +49,9 @@ void shift_number_to_display(int clock_pin, int data_pin, int latch_pin, byte nu
     shiftOut(data_pin, clock_pin, LSBFIRST, number);
     digitalWrite(latch_pin, HIGH);
 }
+
+
+
 
 
 #endif
