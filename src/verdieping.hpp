@@ -53,9 +53,13 @@ void define_pins_for_move_buttons(int button_up, int button_down, int led_up, in
 /**
  * Functie voor het schrijven van data van de slave naar de master
  **/
-void write_data()
+void write_data(int set[])
 {
-    // Wire.write();
+    int i;
+
+    for (i = 0; i < (sizeof(set) / sizeof(set[0])); i++) {
+        Wire.write(set[i]);
+    }
 }
 
 
@@ -126,7 +130,6 @@ void call_button(int button_pin, int led_pin) {
             case 6:
                 ignite_button_light(led_pin, HIGH);
                 call = true;
-                Serial.println("Het knopje werrukt!");
             break;
             // Instructies voor de down button
             case 7:

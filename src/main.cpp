@@ -9,6 +9,7 @@
 #include <Arduino.h>
 #include "verdieping.hpp"
 #include "segment.hpp"
+#include "reed.hpp"
 
 
 #define LATCH_PIN 3
@@ -19,6 +20,8 @@
 #define BUTTON_DOWN 7
 #define LED_UP 8
 #define LED_DOWN 9
+
+#define REED_PIN 10
 
 #define BAUD_RATE 115200
 
@@ -34,8 +37,11 @@ void setup()
 {
     define_pins_for_display(CLOCK_PIN, DATA_PIN, LATCH_PIN);
     define_pins_for_move_buttons(BUTTON_UP, BUTTON_DOWN, LED_UP, LED_DOWN);
+    define_pins_for_reed(REED_PIN);
 
     Serial.begin(BAUD_RATE);
+    Wire.begin(0x0002);
+    Wire.onRequest(requestEvent);
 }
 
 
@@ -50,40 +56,19 @@ void loop()
     int btn2 = digitalRead(BUTTON_DOWN);
 
     call_button(BUTTON_UP, LED_UP);
+}
 
-    // if (btn1 == HIGH && btn2 == LOW)
-    // {
-    //     pressed = 1;
 
-    //     Serial.print("De knop is: ");
-    //     Serial.println(pressed);
-    //     Serial.println("Klikkie");
-    // }
+/**
+ * Functie voor het zenden van de request
+ **/
+void requestEvent()
+{
+    int dataset[6] = {
+        counter[0],
+    };
 
-    // if (btn2 == HIGH && btn1 == LOW)
-    // {
-    //     pressed = 0;
-
-    //     Serial.print("De knop is: ");
-    //     Serial.println(pressed);
-
-    //     digitalWrite(LED_DOWN, HIGH);
-
-    //     if (led_down == 0)
-    //     {
-    //         led_down == 1;
-    //     }
-    // }
-
-    // Serial.print("De knop is: ");
-    // Serial.println(pressed);
-
-    // if (led_down == 1)
-    // {
-    //     digitalWrite(LED_DOWN, HIGH);
-    // }
-    // else
-    // {
-    //     digitalWrite(LED_DOWN, LOW);
-    // }
+    if (arrived == true) {
+        write_data(dataset);
+    }
 }
