@@ -17,7 +17,7 @@
 #define DATA_PIN 4
 
 #define BUTTON_UP 6
-#define BUTTON_DOWN 7
+#define BUTTON_DOWN 5
 #define LED_UP 8
 #define LED_DOWN 9
 
@@ -36,7 +36,7 @@ int led_down = 0;
 void setup()
 {
     define_pins_for_display(CLOCK_PIN, DATA_PIN, LATCH_PIN);
-    define_pins_for_move_buttons(BUTTON_UP, BUTTON_DOWN, LED_UP, LED_DOWN);
+    define_pins_for_move_buttons(BUTTON_UP, BUTTON_DOWN, LED_UP, LED_DOWN, LED_ARRIVED, LED_AWAY);
     define_pins_for_reed(REED_PIN);
 
     Serial.begin(BAUD_RATE);
@@ -55,7 +55,11 @@ void loop()
     int btn1 = digitalRead(BUTTON_UP);
     int btn2 = digitalRead(BUTTON_DOWN);
 
-    call_button(BUTTON_UP, LED_UP);
+    if (btn1 == HIGH) {
+        call_button(BUTTON_UP, LED_UP);
+    } else if (btn2 == HIGH) {
+        call_button(BUTTON_DOWN, LED_DOWN);
+    } 
 }
 
 
@@ -69,6 +73,6 @@ void requestEvent()
     };
 
     if (arrived == true) {
-        write_data(dataset);
+        //write_data(dataset);
     }
 }

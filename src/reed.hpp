@@ -9,7 +9,6 @@
 #define REED_SENSOR
 
 
-bool arrived = false;
 
 
 /**
