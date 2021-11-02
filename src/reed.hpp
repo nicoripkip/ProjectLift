@@ -9,8 +9,6 @@
 #define REED_SENSOR
 
 
-
-
 /**
  * Functie voor het defineren van de pinnen
  **/

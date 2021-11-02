@@ -13,12 +13,12 @@
 #include "segment.hpp"
 
 
-#define LATCH_PIN 3
-#define CLOCK_PIN 2
-#define DATA_PIN 4
+#define LATCH_PIN 0x03
+#define CLOCK_PIN 0x02
+#define DATA_PIN 0x04
 
-#define LED_ARRIVED 11
-#define LED_AWAY 12
+#define LED_ARRIVED 0x0B
+#define LED_AWAY 0x0C
 
 
 bool call = false;

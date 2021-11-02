@@ -12,16 +12,16 @@
 #include "reed.hpp"
 
 
-#define LATCH_PIN 3
-#define CLOCK_PIN 2
-#define DATA_PIN 4
+#define LATCH_PIN 0x03
+#define CLOCK_PIN 0x02
+#define DATA_PIN 0x04
 
-#define BUTTON_UP 6
-#define BUTTON_DOWN 5
-#define LED_UP 8
-#define LED_DOWN 9
+#define BUTTON_UP 0x06
+#define BUTTON_DOWN 0x05
+#define LED_UP 0x08
+#define LED_DOWN 0x09
 
-#define REED_PIN 10
+#define REED_PIN 0x0A
 
 #define BAUD_RATE 115200
 
