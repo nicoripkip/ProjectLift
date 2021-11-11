@@ -1,0 +1,6 @@
+{
+    "sketch": "src/master.cpp",
+    "board": "arduino:avr:uno",
+    "programmer": "arduino:avrispmkii",
+    "port": "/dev/ttyUSB0"
+}
