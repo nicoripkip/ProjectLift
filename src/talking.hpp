@@ -36,9 +36,13 @@ int request(int address, int bit_rate)
  * @brief Functie voor het verzenden van data
  * 
  */
-void send()
+void send(int address, int bit_rate, int number)
 {
+    Wire.beginTransmission(address);
+    Wire.write(number);
+    Wire.endTransmission();
 
+    Serial.println("Data verzonden!");
 }
 
 

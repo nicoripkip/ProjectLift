@@ -1,3 +1,10 @@
+//=================================================================================================
+// Name: master.cpp
+// Description:
+//
+// Author: Nico van Ommen
+// Date: 11-11-2021
+//=================================================================================================
 #include <Arduino.h>
 #include <Wire.h>
 #include "queue.hpp"
@@ -13,6 +20,7 @@
 #define SLAVE_5 0x05
 
 
+int i = 0;
 int x;
 int address_array[5] = { 
     SLAVE_1, 
@@ -42,8 +50,14 @@ void loop()
 {
     x = request(address_array[1], 1);
     if (x > 0) {
+        send(address_array[1], 1, i);
         Serial.print("Slave: ");
         Serial.println(x);
+        i++;
+    }
+
+    if (i > 9) {
+        i = 0;
     }
 
     delay(500);
