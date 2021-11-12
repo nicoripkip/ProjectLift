@@ -68,5 +68,5 @@ void loop()
         i = 0;
     }
 
-    delay(500);
+    activate_motor(1, 10, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
 }

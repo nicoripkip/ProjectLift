@@ -2,5 +2,5 @@
     "sketch": "src/master.cpp",
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrispmkii",
-    "port": "/dev/ttyUSB0"
+    "port": "/dev/ttyACM1"
 }

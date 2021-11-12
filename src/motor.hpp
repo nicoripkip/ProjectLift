@@ -16,7 +16,11 @@
 
 bool up_flag = false;
 bool down_flag = false;
+bool run_flag = false;
+bool arrived_flag = false;
 
+int steps = 0;
+int rounds = 0;
 
 /**
  * @brief Functie voor het defineren van de pinnen voor de 
@@ -59,83 +63,101 @@ void check_up_down(int value)
 
 
 /**
- * @brief Functie voor het laten draaien van de motor
+ * @brief Functie om de richting te bepalen
  * 
+ * @param direction int
  */
-void drive(int direction, int turns, int stepper_pin_1, int stepper_pin_2, int stepper_pin_3, int stepper_pin_4) 
+void reset_steps(int direction)
 {
-    int i, steps = 0;
-
     switch (direction)
     {
-        // Stepper motor de linkerkant op laten draaien
         case LEFT:
-            for (i = 0; i < STEPPER_STEPS * turns; i++) {
-                delay(5);
-                
-                switch (steps)
-                {
-                    case 0:
-                        digitalWrite(stepper_pin_1, HIGH);
-                        digitalWrite(stepper_pin_2, LOW);
-                        digitalWrite(stepper_pin_3, LOW);
-                        digitalWrite(stepper_pin_4, LOW);
-                    break;
-                    case 1:
-                        digitalWrite(stepper_pin_1, HIGH);
-                        digitalWrite(stepper_pin_2, HIGH);
-                        digitalWrite(stepper_pin_3, LOW);
-                        digitalWrite(stepper_pin_4, LOW);
-                    break;
-                    case 2:
-                        digitalWrite(stepper_pin_1, LOW);
-                        digitalWrite(stepper_pin_2, HIGH);
-                        digitalWrite(stepper_pin_3, LOW);
-                        digitalWrite(stepper_pin_4, LOW);
-                    break;
-                    case 3:
-                        digitalWrite(stepper_pin_1, LOW);
-                        digitalWrite(stepper_pin_2, HIGH);
-                        digitalWrite(stepper_pin_3, HIGH);
-                        digitalWrite(stepper_pin_4, LOW);
-                    break;
-                    case 4:
-                        digitalWrite(stepper_pin_1, LOW);
-                        digitalWrite(stepper_pin_2, LOW);
-                        digitalWrite(stepper_pin_3, HIGH);
-                        digitalWrite(stepper_pin_4, LOW);
-                    break;
-                    case 5:
-                        digitalWrite(stepper_pin_1, LOW);
-                        digitalWrite(stepper_pin_2, LOW);
-                        digitalWrite(stepper_pin_3, HIGH);
-                        digitalWrite(stepper_pin_4, HIGH);
-                    break;
-                    case 6:
-                        digitalWrite(stepper_pin_1, LOW);
-                        digitalWrite(stepper_pin_2, LOW);
-                        digitalWrite(stepper_pin_3, LOW);
-                        digitalWrite(stepper_pin_4, HIGH);
-                    break;
-                    case 7:
-                        digitalWrite(stepper_pin_1, HIGH);
-                        digitalWrite(stepper_pin_2, LOW);
-                        digitalWrite(stepper_pin_3, LOW);
-                        digitalWrite(stepper_pin_4, HIGH);
-                    break;
+            if (steps >= 7) {
+                steps = 0;
+            } else {
+                steps++;
 
-                    if (steps > 7) {
-                        steps = 0;
-                    }
-                }
+                Serial.print("Stappen: ");
+                Serial.println(steps);
             }
         break;
-        // Stepper motor de rechterkant op laten draaien
         case RIGHT:
-            for (i = STEPPER_STEPS; i > 0; i--) {
-
+            if (steps <= 0) {
+                steps = 7;
+            } else {
+                steps--;
+                Serial.println("Rechts");
             }
         break;
+    }
+    
+}
+
+
+/**
+ * @brief Functie voor het laten draaien van de motor
+ * 
+ **/
+void drive(int direction, int turns, int stepper_pin_1, int stepper_pin_2, int stepper_pin_3, int stepper_pin_4) 
+{
+    int i;
+
+    for (i = 0; i < 1; i++) {  
+        delay(1);
+
+        switch (steps)
+        {
+            case 0:
+                digitalWrite(stepper_pin_1, HIGH);
+                digitalWrite(stepper_pin_2, LOW);
+                digitalWrite(stepper_pin_3, LOW);
+                digitalWrite(stepper_pin_4, LOW);
+            break;
+            case 1:
+                digitalWrite(stepper_pin_1, HIGH);
+                digitalWrite(stepper_pin_2, HIGH);
+                digitalWrite(stepper_pin_3, LOW);
+                digitalWrite(stepper_pin_4, LOW);
+            break;
+            case 2:
+                digitalWrite(stepper_pin_1, LOW);
+                digitalWrite(stepper_pin_2, HIGH);
+                digitalWrite(stepper_pin_3, LOW);
+                digitalWrite(stepper_pin_4, LOW);
+            break;
+            case 3:
+                digitalWrite(stepper_pin_1, LOW);
+                digitalWrite(stepper_pin_2, HIGH);
+                digitalWrite(stepper_pin_3, HIGH);
+                digitalWrite(stepper_pin_4, LOW);
+            break;
+            case 4:
+                digitalWrite(stepper_pin_1, LOW);
+                digitalWrite(stepper_pin_2, LOW);
+                digitalWrite(stepper_pin_3, HIGH);
+                digitalWrite(stepper_pin_4, LOW);
+            break;
+            case 5:
+                digitalWrite(stepper_pin_1, LOW);
+                digitalWrite(stepper_pin_2, LOW);
+                digitalWrite(stepper_pin_3, HIGH);
+                digitalWrite(stepper_pin_4, HIGH);
+            break;
+            case 6:
+                digitalWrite(stepper_pin_1, LOW);
+                digitalWrite(stepper_pin_2, LOW);
+                digitalWrite(stepper_pin_3, LOW);
+                digitalWrite(stepper_pin_4, HIGH);
+            break;
+            case 7:
+                digitalWrite(stepper_pin_1, HIGH);
+                digitalWrite(stepper_pin_2, LOW);
+                digitalWrite(stepper_pin_3, LOW);
+                digitalWrite(stepper_pin_4, HIGH);
+            break;
+        }
+
+        reset_steps(direction);
     }
 }
 
@@ -143,10 +165,19 @@ void drive(int direction, int turns, int stepper_pin_1, int stepper_pin_2, int s
 /**
  * @brief Functie voor het starten van de motor
  * 
- */
-void start()
+ **/
+void activate_motor(int direction, int turns, int motor_pin_1, int motor_pin_2, int motor_pin_3, int motor_pin_4)
 {
+    run_flag = true;
 
+    while (run_flag == true) {
+        delay(1);
+        drive(direction, turns, motor_pin_1, motor_pin_2, motor_pin_3, motor_pin_4);
+
+        if (run_flag == false) {
+            break;
+        }
+    }
 }
 
 
@@ -154,8 +185,10 @@ void start()
  * @brief Functie voor het stoppen van de motor
  * 
  */
-void stop()
+void stop_motor()
 {
-
+    if (arrived_flag == true) {
+        run_flag == false;
+    }
 }
 #endif
