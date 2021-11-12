@@ -9,6 +9,7 @@
 #include <Wire.h>
 #include "queue.hpp"
 #include "talking.hpp"
+#include "motor.hpp"
 
 
 #define BAUD_RATE 115200
@@ -18,6 +19,11 @@
 #define SLAVE_3 0x03
 #define SLAVE_4 0x04
 #define SLAVE_5 0x05
+
+#define STEPPER_PIN_1 0x02
+#define STEPPER_PIN_2 0x03
+#define STEPPER_PIN_3 0x04
+#define STEPPER_PIN_4 0x04
 
 
 int i = 0;
@@ -37,13 +43,15 @@ int address_array[5] = {
  */
 void setup()
 {
+    define_pins_for_stepper_motor(STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
+
     Wire.begin();
     Serial.begin(BAUD_RATE);
 }
 
 
 /**
- * @brief 
+ * @brief Functie die zich heel de tijd herhaalt
  * 
  */
 void loop()

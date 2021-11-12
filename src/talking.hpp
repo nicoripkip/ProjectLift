@@ -32,6 +32,7 @@ int request(int address, int bit_rate)
     }
 }
 
+
 /**
  * @brief Functie voor het verzenden van data
  * 
@@ -43,6 +44,23 @@ void send(int address, int bit_rate, int number)
     Wire.endTransmission();
 
     Serial.println("Data verzonden!");
+}
+
+
+/**
+ * @brief Functie die kijkt of de lift op de juiste verdieping is
+ * 
+ * @param address int 
+ * @param stop_code int
+ * @return bool
+ */
+bool check_if_arrived(int address, int destination_address, int stop_code)
+{
+    if (address == destination_address) {
+        return true;
+    }
+
+    return false;
 }
 
 
