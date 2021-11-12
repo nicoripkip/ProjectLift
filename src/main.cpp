@@ -25,9 +25,13 @@
 
 #define BAUD_RATE 115200
 
+#define I2C_ADDRESS 2
+
+
 
 int pressed = 0;
 int led_down = 0;
+int number;
 
 
 /**
@@ -40,8 +44,9 @@ void setup()
     define_pins_for_reed(REED_PIN);
 
     Serial.begin(BAUD_RATE);
-    Wire.begin(0x0002);
+    Wire.begin(I2C_ADDRESS);
     Wire.onRequest(requestEvent);
+    Wire.onReceive(receiveEvent);
 }
 
 
@@ -50,15 +55,15 @@ void setup()
  **/
 void loop()
 {
-    shift_number_to_display(CLOCK_PIN, DATA_PIN, LATCH_PIN, counter[3]);
+    shift_number_to_display(CLOCK_PIN, DATA_PIN, LATCH_PIN, counter[number]);
 
     int btn1 = digitalRead(BUTTON_UP);
     int btn2 = digitalRead(BUTTON_DOWN);
 
     if (btn1 == HIGH) {
-        call_button(BUTTON_UP, LED_UP);
+        call_button(BUTTON_UP, LED_UP, number);
     } else if (btn2 == HIGH) {
-        call_button(BUTTON_DOWN, LED_DOWN);
+        call_button(BUTTON_DOWN, LED_DOWN, number);
     } 
 }
 
@@ -68,11 +73,27 @@ void loop()
  **/
 void requestEvent()
 {
-    int dataset[6] = {
-        counter[0],
-    };
+    if (call_flag == =true && call_count == 0) {
+        Wire.write(3);
+        Serial.println("Zend via I2C");
+        call_count++;
+    }
 
-    if (arrived == true) {
-        //write_data(dataset);
+    // Serial.println("Communicatie!");
+}
+
+
+/**
+ * Functie die data ontvangt van de master
+ **/
+void receiveEvent(int bytes)
+{
+    while (Wire.available()) {
+        number = Wire.read();
+
+        if (number != 0) {
+            Serial.print("Segment: ");
+            Serial.println(number);
+        }
     }
 }

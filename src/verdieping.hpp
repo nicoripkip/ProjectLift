@@ -21,8 +21,9 @@
 #define LED_AWAY 0x0C
 
 
-bool call = false;
-bool arrived = false;
+bool call_flag = false;
+bool arrived_flag = false;
+int call_count = 0;
 
 
 /**
@@ -100,7 +101,7 @@ void ignite_button_light(int led_pin, int action)
  **/
 void change_status_led(int led_arrived, int led_away)
 {
-    switch (arrived) {
+    switch (arrived_flag) {
         // Wanneer de status true is
         case true:
             digitalWrite(led_arrived, HIGH);
@@ -138,12 +139,11 @@ void blinking_segment_display(int led_pin, int number)
         }
 
         if (i >= 10) {
-            call = false;
+            call_flag = false;
             ignite_button_light(led_pin, LOW);
-            arrived = true;
+            arrived_flag = true;
             break;
         }
-        
         i++;
     }
 }
@@ -152,7 +152,7 @@ void blinking_segment_display(int led_pin, int number)
 /**
  * Functie voor het aansturen van de button
  **/
-void call_button(int button_pin, int led_pin) {
+void call_button(int button_pin, int led_pin, int segment) {
     int button = digitalRead(button_pin);
 
     if (button == HIGH) {
@@ -162,15 +162,17 @@ void call_button(int button_pin, int led_pin) {
             case 6:
                 ignite_button_light(led_pin, HIGH);
                 change_status_led(LED_ARRIVED, LED_AWAY);
-                call = true;
-                arrived = false;
+                call_flag = true;
+                arrived_flag = false;
+                call_count = 0;
             break;
             // Instructies voor de down button
             case 5:
                 ignite_button_light(led_pin, HIGH);
                 change_status_led(LED_ARRIVED, LED_AWAY);
-                call = true;
-                arrived = false;
+                call_flag = true;
+                arrived_flag = false;
+                call_count = 0;
             break;
             // Error handling
             default:
@@ -179,10 +181,10 @@ void call_button(int button_pin, int led_pin) {
         }
     }
 
-    if (call == true && button_pin == 6) {
-        blinking_segment_display(led_pin, 7);
-    } else if (call == true && button_pin == 5) {
-        blinking_segment_display(led_pin, 5);
+    if (call_flag == true && button_pin == 6) {
+        blinking_segment_display(led_pin, segment);
+    } else if (call_flag == true && button_pin == 5) {
+        blinking_segment_display(led_pin, segment);
     }
 }
 

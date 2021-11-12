@@ -26,7 +26,7 @@ int read_reed_sensor(int reed_pin)
     int value = digitalRead(reed_pin);
 
     if (value == HIGH) {
-        arrived = true;
+        arrived_flag = true;
     }
 }
 
